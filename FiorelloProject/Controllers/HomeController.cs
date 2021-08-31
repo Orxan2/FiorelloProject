@@ -26,9 +26,11 @@ namespace FiorelloProject.Controllers
                 ProductCategories = await _context.ProductCategories.
                 Include(pc=>pc.Category).Where(pc=>pc.CategoryId == pc.Category.CategoryId).
                 Include(pc=>pc.Product).Where(pc=>pc.ProductId == pc.Product.ProductId).ToListAsync(),
-                Experts = await _context.Experts.Include(e=>e.Profession).Where(e=>e.ProfessionId == e.Profession.ProfessionId).ToListAsync()
-                
-        };
+                Experts = await _context.Experts.Include(e => e.Profession).Where(e => e.ProfessionId == e.Profession.ProfessionId).ToListAsync(),
+                InstagramPhotos = await _context.InstagramPhotos.ToListAsync(),
+                ExpertSliders = await _context.ExpertSliders.Include(e => e.Profession).Where(e => e.ProfessionId == e.Profession.ProfessionId).ToListAsync(),
+                BlogCards = await _context.BlogCards.ToListAsync()
+            };
             return View(HMV);
         }
     }

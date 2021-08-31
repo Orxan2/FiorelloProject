@@ -20,5 +20,8 @@ namespace FiorelloProject.DAL
         public DbSet<ProductCategory> ProductCategories { get; set; }
         public DbSet<Profession> Professions { get; set; }
         public DbSet<Expert> Experts { get; set; }
+        public DbSet<InstagramPhoto> InstagramPhotos { get; set; }
+        public DbSet<ExpertSlider> ExpertSliders { get; set; }
+        public DbSet<BlogCard> BlogCards { get; set; }
     }
 }

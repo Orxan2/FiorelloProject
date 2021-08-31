@@ -10,5 +10,6 @@ namespace FiorelloProject.Models
         public int ProfessionId { get; set; }
         public string Name { get; set; }
         public List<Expert> Experts { get; set; }
+        public List<ExpertSlider> ExpertSliders { get; set; }
     }
 }

@@ -15,5 +15,8 @@ namespace FiorelloProject.ViewModels
         public List<ProductCategory> ProductCategories { get; set; }
         public List<Profession> Professions { get; set; }
         public List<Expert> Experts { get; set; }
+        public List<InstagramPhoto> InstagramPhotos { get; set; }
+        public List<ExpertSlider> ExpertSliders { get; set; }
+        public List<BlogCard> BlogCards { get; set; }
     }
 }
