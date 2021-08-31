@@ -29,7 +29,11 @@ namespace FiorelloProject.Controllers
                 Experts = await _context.Experts.Include(e => e.Profession).Where(e => e.ProfessionId == e.Profession.ProfessionId).ToListAsync(),
                 InstagramPhotos = await _context.InstagramPhotos.ToListAsync(),
                 ExpertSliders = await _context.ExpertSliders.Include(e => e.Profession).Where(e => e.ProfessionId == e.Profession.ProfessionId).ToListAsync(),
-                BlogCards = await _context.BlogCards.ToListAsync()
+                BlogCards = await _context.BlogCards.ToListAsync(),
+                About = await _context.About.ToListAsync(),
+                AboutLists = await _context.AboutLists.ToListAsync(),
+                BlogHeading = await _context.BlogHeading.ToListAsync(),
+                ExpertHeading = await _context.ExpertHeading.ToListAsync()
             };
             return View(HMV);
         }

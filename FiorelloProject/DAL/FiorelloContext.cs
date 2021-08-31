@@ -23,5 +23,9 @@ namespace FiorelloProject.DAL
         public DbSet<InstagramPhoto> InstagramPhotos { get; set; }
         public DbSet<ExpertSlider> ExpertSliders { get; set; }
         public DbSet<BlogCard> BlogCards { get; set; }
+        public DbSet<About> About { get; set; }
+        public DbSet<AboutList> AboutLists { get; set; }
+        public DbSet<BlogHeading> BlogHeading { get; set; }
+        public DbSet<ExpertHeading> ExpertHeading { get; set; }
     }
 }

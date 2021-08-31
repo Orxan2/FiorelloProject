@@ -18,5 +18,9 @@ namespace FiorelloProject.ViewModels
         public List<InstagramPhoto> InstagramPhotos { get; set; }
         public List<ExpertSlider> ExpertSliders { get; set; }
         public List<BlogCard> BlogCards { get; set; }
+        public List<About> About { get; set; }
+        public List<AboutList> AboutLists { get; set; }
+        public List<BlogHeading> BlogHeading { get; set; }
+        public List<ExpertHeading> ExpertHeading { get; set; }
     }
 }

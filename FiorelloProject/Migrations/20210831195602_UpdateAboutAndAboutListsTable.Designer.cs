@@ -4,14 +4,16 @@ using FiorelloProject.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FiorelloProject.Migrations
 {
     [DbContext(typeof(FiorelloContext))]
-    partial class FiorelloContextModelSnapshot : ModelSnapshot
+    [Migration("20210831195602_UpdateAboutAndAboutListsTable")]
+    partial class UpdateAboutAndAboutListsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -79,24 +81,6 @@ namespace FiorelloProject.Migrations
                     b.ToTable("BlogCards");
                 });
 
-            modelBuilder.Entity("FiorelloProject.Models.BlogHeading", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Text")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("BlogHeading");
-                });
-
             modelBuilder.Entity("FiorelloProject.Models.Category", b =>
                 {
                     b.Property<int>("CategoryId")
@@ -133,24 +117,6 @@ namespace FiorelloProject.Migrations
                     b.HasIndex("ProfessionId");
 
                     b.ToTable("Experts");
-                });
-
-            modelBuilder.Entity("FiorelloProject.Models.ExpertHeading", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Text")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ExpertHeading");
                 });
 
             modelBuilder.Entity("FiorelloProject.Models.ExpertSlider", b =>
