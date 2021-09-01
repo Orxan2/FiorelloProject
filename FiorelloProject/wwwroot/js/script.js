@@ -63,7 +63,7 @@ $(document).ready(function () {
         }
     });
 
-    let skip = 8;
+    let skip = 100;
     let take = 4;
     $(window).on('scroll', function () {
        

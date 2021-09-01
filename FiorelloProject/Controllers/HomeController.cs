@@ -24,7 +24,7 @@ namespace FiorelloProject.Controllers
                 Slogan = await _context.Slogan.ToListAsync(),
                 Categories = await _context.Categories.ToListAsync(),
                 ProductCategories = await _context.ProductCategories.Include(pc=>pc.Category).
-                Include(pc=>pc.Product).OrderByDescending(pc=>pc.ProductCategoryId).Take(8).ToListAsync(),
+                Include(pc=>pc.Product).Where(pc=>pc.Product.IsDeleted==false).OrderByDescending(pc=>pc.ProductCategoryId).Take(8).ToListAsync(),
                 Experts = await _context.Experts.Include(e => e.Profession).ToListAsync(),
                 InstagramPhotos = await _context.InstagramPhotos.ToListAsync(),
                 ExpertSliders = await _context.ExpertSliders.Include(e => e.Profession).ToListAsync(),
