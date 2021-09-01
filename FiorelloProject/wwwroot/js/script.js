@@ -65,19 +65,44 @@ $(document).ready(function () {
 
     let skip = 8;
     let take = 4;
-        $('#load').on('click', function () {            
-            $.ajax({
-                url: `/product/LoadMore?skip=${skip}&take=${take}`,
-                type: "Get",              
-                success: function (response) {
-                    $('#addHere').append(response);
-                    skip += take;
-                   
-                }              
-            });
-            
-        });
-    // ACCORDION 
+    $(window).on('scroll', function () {
+       
+        let bottom = ($('#addHere').position().top + $('#addHere').height()) / 2;
+            let orxan = $(window).scrollTop();
+            if (orxan >= bottom) {
+                let products = $('#ProductCount').val();
+                console.log(skip);
+                console.log(products);
+                $.ajax({
+                    url: `/product/LoadMore?skip=${skip}&take=${take}`,
+                    type: "Get",
+                    success: function (response) {
+                        $('#addHere').append(response);
+
+                        if (skip >= products) {
+                            $('#load').remove();
+                        }
+
+                    }
+                });
+                skip += take;
+            }       
+       });
+    //$('#load').on('click', function () {
+    //    let products = $('#ProductCount').val();
+    //    $.ajax({
+    //        url: `/product/LoadMore?skip=${skip}&take=${take}`,
+    //        type: "Get",
+    //        success: function (response) {
+    //            $('#addHere').append(response);
+    //            skip += take;
+    //            if (skip >= products) {
+    //                $('#load').remove();
+    //            }
+    //        }
+    //    });
+    //});
+    // ACCORDION
 
     $(document).on('click', '.question', function()
     {   

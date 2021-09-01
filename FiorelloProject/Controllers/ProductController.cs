@@ -17,12 +17,13 @@ namespace FiorelloProject.Controllers
         }
         public async Task<IActionResult> Index()
         {
+            ViewBag.ProductCount = _context.ProductCategories.Count();
             var productCategories = await _context.ProductCategories.Include(pc => pc.Category).Include(pc => pc.Product)
                 .OrderByDescending(pc => pc.ProductCategoryId).Take(8).ToListAsync();
             return View(productCategories);
         }
         public async Task<IActionResult> LoadMore(int skip=8,int take=4)
-        {
+        {           
             var productCategories = await _context.ProductCategories.Include(pc => pc.Category).Include(pc => pc.Product)
                 .OrderByDescending(pc => pc.ProductCategoryId).Skip(skip).Take(take).ToListAsync();
             return PartialView("_LoadMore",productCategories);
