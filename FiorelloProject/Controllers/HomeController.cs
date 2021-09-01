@@ -23,12 +23,11 @@ namespace FiorelloProject.Controllers
                 Sliders = await _context.Sliders.ToListAsync(),
                 Slogan = await _context.Slogan.ToListAsync(),
                 Categories = await _context.Categories.ToListAsync(),
-                ProductCategories = await _context.ProductCategories.
-                Include(pc=>pc.Category).Where(pc=>pc.CategoryId == pc.Category.CategoryId).
-                Include(pc=>pc.Product).Where(pc=>pc.ProductId == pc.Product.ProductId).ToListAsync(),
-                Experts = await _context.Experts.Include(e => e.Profession).Where(e => e.ProfessionId == e.Profession.ProfessionId).ToListAsync(),
+                ProductCategories = await _context.ProductCategories.Include(pc=>pc.Category).
+                Include(pc=>pc.Product).OrderByDescending(pc=>pc.ProductCategoryId).Take(8).ToListAsync(),
+                Experts = await _context.Experts.Include(e => e.Profession).ToListAsync(),
                 InstagramPhotos = await _context.InstagramPhotos.ToListAsync(),
-                ExpertSliders = await _context.ExpertSliders.Include(e => e.Profession).Where(e => e.ProfessionId == e.Profession.ProfessionId).ToListAsync(),
+                ExpertSliders = await _context.ExpertSliders.Include(e => e.Profession).ToListAsync(),
                 BlogCards = await _context.BlogCards.ToListAsync(),
                 About = await _context.About.ToListAsync(),
                 AboutLists = await _context.AboutLists.ToListAsync(),

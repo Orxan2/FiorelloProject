@@ -49,23 +49,34 @@ $(document).ready(function () {
         e.preventDefault();
         let category = $(this).attr('data-id');
         let products = $('.product-item');
-        
+
         products.each(function () {
-            if(category == $(this).attr('data-id'))
-            {
+            if (category == $(this).attr('data-id')) {
                 $(this).parent().fadeIn();
             }
-            else
-            {
+            else {
                 $(this).parent().hide();
             }
         })
-        if(category == 'all')
-        {
+        if (category == 'all') {
             products.parent().fadeIn();
         }
-    })
+    });
 
+    let skip = 8;
+    let take = 4;
+        $('#load').on('click', function () {            
+            $.ajax({
+                url: `/product/LoadMore?skip=${skip}&take=${take}`,
+                type: "Get",              
+                success: function (response) {
+                    $('#addHere').append(response);
+                    skip += take;
+                   
+                }              
+            });
+            
+        });
     // ACCORDION 
 
     $(document).on('click', '.question', function()
