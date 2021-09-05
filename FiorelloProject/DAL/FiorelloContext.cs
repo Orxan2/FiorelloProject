@@ -27,7 +27,8 @@ namespace FiorelloProject.DAL
         public DbSet<AboutList> AboutLists { get; set; }
         public DbSet<BlogHeading> BlogHeading { get; set; }
         public DbSet<ExpertHeading> ExpertHeading { get; set; }
+        public DbSet<Biography> Biography { get; set; }
 
-    
+
     }
 }

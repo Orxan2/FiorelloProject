@@ -13,7 +13,7 @@
                 <h6>@productCategory.Product.Title.ToUpper()</h6>
             </div>
             <div class="price">
-                <span class="text-black-50">Add to cart</span>
+                <span class="text-black-50"><a asp-controller="Product" asp-action="AddBasket" asp-route-id="@productCategory.Product.ProductId">Add to cart</a></span>
                 <span class="text-black-50">$@productCategory.Product.Price</span>
             </div>
         </div>

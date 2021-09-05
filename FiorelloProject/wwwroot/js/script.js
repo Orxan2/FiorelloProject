@@ -63,45 +63,31 @@ $(document).ready(function () {
         }
     });
 
-    let skip = 100;
+    let skip = 8;
     let take = 4;
+    let products = $('#ProductCount').val();
     $(window).on('scroll', function () {
        
         let bottom = ($('#addHere').position().top + $('#addHere').height()) / 2;
             let orxan = $(window).scrollTop();
-            if (orxan >= bottom) {
-                let products = $('#ProductCount').val();
-                console.log(skip);
-                console.log(products);
+        if (orxan >= bottom) {
+            console.log(products);
+            console.log(skip);
+            console.log(typeof skip);
                 $.ajax({
                     url: `/product/LoadMore?skip=${skip}&take=${take}`,
                     type: "Get",
                     success: function (response) {
                         $('#addHere').append(response);
-
                         if (skip >= products) {
                             $('#load').remove();
                         }
-
                     }
                 });
                 skip += take;
             }       
-       });
-    //$('#load').on('click', function () {
-    //    let products = $('#ProductCount').val();
-    //    $.ajax({
-    //        url: `/product/LoadMore?skip=${skip}&take=${take}`,
-    //        type: "Get",
-    //        success: function (response) {
-    //            $('#addHere').append(response);
-    //            skip += take;
-    //            if (skip >= products) {
-    //                $('#load').remove();
-    //            }
-    //        }
-    //    });
-    //});
+    });
+    
     // ACCORDION
 
     $(document).on('click', '.question', function()
