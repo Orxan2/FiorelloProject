@@ -170,3 +170,32 @@ $(document).ready(function () {
         );
       });
 })
+//Basket 
+
+$(".plus").each(function (index, element) {
+    $(element).on('click', function () {
+        let quantity = $(element).prev().val();
+        quantity++;
+        $(element).prev().val(quantity);
+        $('.totalPrice').each(function (index, totalElement) {
+            let total = $(totalElement).val();
+            $(totalElement).val(total * quantity);
+            console.log($(totalElement));
+        })
+        
+    });
+})
+$(".minus").each(function (index, element) {
+    $(element).on('click', function () {
+        let quantity = $(element).next().val();
+        if (quantity !=0) {
+            quantity--;
+        }
+        $(element).next().val(quantity);
+        $('.totalPrice').each(function (index, totalElement) {
+            let total = $(totalElement).val();
+            $(totalElement).val(total * quantity);
+        })
+       
+    });
+})

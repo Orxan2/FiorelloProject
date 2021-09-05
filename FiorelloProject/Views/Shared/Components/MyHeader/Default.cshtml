@@ -10,7 +10,7 @@
                         {
                             @if (string.IsNullOrEmpty(item.Link))
                             {
-                                <img src="img/@item.Title" id="logo" />
+                                <img src="~/img/@item.Title" id="logo" />
                             }
 
                         }
@@ -145,12 +145,14 @@
                                 </ul>
                             </li>
                             <li class="nav-item my-auto shop-cart">
-                                <i class="fas fa-shopping-bag"></i>
-                                <sup class="rounded-circle">0</sup>
-                                <span>CART ($0)</span>
-                                <ul class="list-unstyled py-3">
-                                    <li class="">No products in the cart.</li>
-                                </ul>
+                                <a class="btn" asp-controller="Product" asp-action="Basket">
+                                    <i class="fas fa-shopping-bag"></i>
+                                    <sup class="rounded-circle">0</sup>
+                                    <span>CART ($0)</span>
+                                    @*<ul class="list-unstyled py-3">
+            <li class="">No products in the cart.</li>
+        </ul>*@
+                                </a>
                             </li>
                         </ul>
                     </div>

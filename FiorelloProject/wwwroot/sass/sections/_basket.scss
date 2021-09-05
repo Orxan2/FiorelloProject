@@ -1,0 +1,144 @@
+﻿.basket-slogan {
+    p {
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 2;
+        padding: 0 40px;
+    }
+
+    .list-group {
+        a {
+            font-weight: 600;
+        }
+
+        a:not(.disabled) {
+            color: $summer-color;
+            transition: color 0.3s linear;
+
+            &:hover {
+                color: $head-link-hovered;
+                text-decoration: underline;
+            }
+        }
+
+        a.disabled {
+            position: relative;
+            color: $contact-hover-text;
+        }
+    }
+}
+
+.product-cart {
+    width: 100%;
+    height: 400px;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    &__item {
+        border-bottom: 1px solid $contact-border-color;
+
+        .main-box {
+            display: flex;
+            align-items: center;
+            padding: 2rem 0;
+
+            &__image {
+                width: 75px;
+                height: 75px;
+                display: flex;
+                align-items: center;
+            }
+
+            &__title {
+                font-weight: 700;
+                position: relative;
+                padding: 4px 0;
+                color: $contact-hover-text;
+                transition: color 0.3s linear;
+                font-size: 18px;
+                text-transform: capitalize;
+
+                &::after {
+                    content: "";
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    width: 0;
+                    height: 2px;
+                    background-color: $contact-hover-text;
+                    transition: all 0.5s linear;
+                }
+
+                &:hover {
+                    color: #000;
+
+                    &::after {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+
+        .details {
+            p {
+                font-size: 18px;
+            }
+
+            .close {
+                color: $contact-letter-color;
+                transition: color .3s linear;
+                font-size: 18px;
+
+                &:hover {
+                    color: $contact-hover-text;
+                }
+            }
+        }
+
+        .counter {
+            input {
+                width: 80px;
+                height: 40px;
+            }
+        }
+
+        &:last-of-type {
+            border: 0;
+        }
+    }
+}
+
+.basket-operations {
+    a {
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        font-weight: 700;
+        font-size: 14px;
+
+        &:first-of-type {
+            color: $contact-text;
+
+            &:hover {
+                color: $contact-hover-text;
+            }
+        }
+
+        &:last-of-type {
+            color: $summer-color;
+
+            &:hover {
+                color: $head-link-hovered;
+            }
+        }
+
+        &:hover {
+            text-decoration: underline;
+            ;
+        }
+    }
+}
+
+.check {
+    box-shadow: 0 0 10px $contact-border-color;
+    padding: 0;
+}

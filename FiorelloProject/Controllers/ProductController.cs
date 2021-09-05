@@ -17,11 +17,10 @@ namespace FiorelloProject.Controllers
         {
             _context = context;
         }
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             ViewBag.ProductCount = _context.ProductCategories.Count();
-            //var productCategories = await _context.ProductCategories.Include(pc => pc.Category).Include(pc => pc.Product)
-            //    .Where(pc => pc.Product.IsDeleted == false).OrderByDescending(pc => pc.ProductCategoryId).Take(8).ToListAsync();
+           
             return View();
             
         }
@@ -31,8 +30,9 @@ namespace FiorelloProject.Controllers
                 .Where(pc => pc.Product.IsDeleted == false).OrderByDescending(pc => pc.ProductCategoryId).Skip(skip).Take(take).ToListAsync();
             return PartialView("_LoadMore",productCategories);
         }
-        public async Task<IActionResult> AddBasket(int id)
+        public IActionResult AddBasket(int id)
         {
+            var product = _context.Products.ToList().FirstOrDefault(b => b.ProductId == id);
             List<AddedProduct> basket = new List<AddedProduct>();
             var orxan = Request.Cookies["baskets"];
             if (orxan != null)
@@ -44,13 +44,19 @@ namespace FiorelloProject.Controllers
             if (basket.Exists(b => b.Id == id))
             {
                 basket.FirstOrDefault(b => b.Id == id).Count++;
+                basket.FirstOrDefault(b => b.Id == id).TotalPrice *= basket.FirstOrDefault(b => b.Id == id).Count;
+
             }
             else
             {
                 AddedProduct pro = new AddedProduct
                 {
                     Id = id,
-                    Count = 1
+                    Count = 1,
+                    Title = product.Title,
+                    Image = product.Image,
+                    Price = product.Price,
+                    TotalPrice = product.Price
                 };
                 basket.Add(pro);
             }
@@ -60,6 +66,13 @@ namespace FiorelloProject.Controllers
 
             return RedirectToAction(nameof(Index));
 
+        }
+
+        public IActionResult Basket()
+        {
+            var basket = JsonSerializer.Deserialize<List<AddedProduct>>(Request.Cookies["baskets"]);
+
+            return View(basket);
         }
     }
 }
