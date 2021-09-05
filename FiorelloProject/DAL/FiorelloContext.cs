@@ -13,6 +13,7 @@ namespace FiorelloProject.DAL
         {
         }
 
+
         public DbSet<Slider> Sliders { get; set; }
         public DbSet<Slogan> Slogan { get; set; }
         public DbSet<Category> Categories { get; set; }

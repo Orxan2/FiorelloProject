@@ -74,5 +74,47 @@ namespace FiorelloProject.Controllers
 
             return View(basket);
         }
+        public IActionResult Minus(int id)
+        {
+            //var basket = JsonSerializer.Deserialize<List<AddedProduct>>(Request.Cookies["baskets"]);
+            //var product = basket.FirstOrDefault(b => b.Id == id);
+            //basket.FirstOrDefault(b => b.Id == id).Count--;
+            //basket.FirstOrDefault(b => b.Id == id).TotalPrice = product.Price * product.Count;
+            var basket = JsonSerializer.Deserialize<List<AddedProduct>>(Request.Cookies["baskets"]);
+            var product = basket.FirstOrDefault(b => b.Id == id);
+            product.Count--;
+            product.TotalPrice = product.Price * product.Count;
+            if (product.Count == 0)
+            {
+                basket.Remove(product);
+            }
+            else
+            {
+                basket.FirstOrDefault(p => p.Id == product.Id).Count = product.Count;
+                basket.FirstOrDefault(p => p.Id == product.Id).TotalPrice = product.TotalPrice;
+            }
+            Response.Cookies.Append("baskets", JsonSerializer.Serialize<List<AddedProduct>>(basket));
+            return RedirectToAction("Basket", basket);
+
+        }
+        
+        public IActionResult Plus(int id)
+        {
+            var basket = JsonSerializer.Deserialize<List<AddedProduct>>(Request.Cookies["baskets"]);
+            var product = basket.FirstOrDefault(b => b.Id == id);
+            basket.FirstOrDefault(p => p.Id == product.Id).Count++;
+            basket.FirstOrDefault(b => b.Id == id).TotalPrice = product.Price * product.Count;
+
+            Response.Cookies.Append("baskets", JsonSerializer.Serialize<List<AddedProduct>>(basket));
+            return RedirectToAction("Basket", basket);
+        }
+        public IActionResult Close(int id)
+        {
+            var basket = JsonSerializer.Deserialize<List<AddedProduct>>(Request.Cookies["baskets"]);
+            var product = basket.FirstOrDefault(b => b.Id == id);
+            basket.Remove(product);
+            Response.Cookies.Append("baskets", JsonSerializer.Serialize<List<AddedProduct>>(basket));
+            return RedirectToAction("Basket", basket);
+        }
     }
 }
