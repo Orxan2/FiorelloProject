@@ -1,0 +1,21 @@
+﻿@model IEnumerable<ProductCategory>
+
+@foreach (var productCategory in Model)
+{
+    <div class="col-sm-6 col-md-4 col-lg-3 mt-3">
+        <div class="product-item text-center" data-id="@productCategory.Category.Title.ToLower()">
+            <div class="img">
+                <a href="">
+                    <img src="~/img/@productCategory.Product.Image" class="img-fluid" />
+                </a>
+            </div>
+            <div class="title mt-3">
+                <h6>@productCategory.Product.Title.ToUpper()</h6>
+            </div>
+            <div class="price">
+                <span class="text-black-50"><a asp-controller="Product" asp-action="AddBasket" asp-route-id="@productCategory.Product.ProductId">Add to cart</a></span>
+                <span class="text-black-50">$@productCategory.Product.Price</span>
+            </div>
+        </div>
+    </div>
+}

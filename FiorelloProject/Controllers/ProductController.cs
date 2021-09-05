@@ -20,9 +20,9 @@ namespace FiorelloProject.Controllers
         public async Task<IActionResult> Index()
         {
             ViewBag.ProductCount = _context.ProductCategories.Count();
-            var productCategories = await _context.ProductCategories.Include(pc => pc.Category).Include(pc => pc.Product)
-                .Where(pc => pc.Product.IsDeleted == false).OrderByDescending(pc => pc.ProductCategoryId).Take(8).ToListAsync();
-            return View(productCategories);
+            //var productCategories = await _context.ProductCategories.Include(pc => pc.Category).Include(pc => pc.Product)
+            //    .Where(pc => pc.Product.IsDeleted == false).OrderByDescending(pc => pc.ProductCategoryId).Take(8).ToListAsync();
+            return View();
             
         }
         public async Task<IActionResult> LoadMore(int skip=8,int take=4)
