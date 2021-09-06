@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Biography>
+﻿@model BasketViewModel
 
 <header>
     <div class="container">
@@ -6,9 +6,9 @@
             <div class="col-12">
                 <nav class="navbar navbar-expand-lg d-flex d-lg-block justify-content-between d-xl-flex navbar-light py-3 py-lg-0">
                     <a class="navbar-brand" asp-controller="Home" asp-action="index">
-                        @foreach (var item in Model)
+                        @foreach (var item in Model.Biography)
                         {
-                            @if (string.IsNullOrEmpty(item.Link))
+                            @if (item.Type == Biography.TitleType.Logo)
                             {
                                 <img src="~/img/@item.Title" id="logo" />
                             }
@@ -145,13 +145,36 @@
                                 </ul>
                             </li>
                             <li class="nav-item my-auto shop-cart">
-                                <a class="btn" asp-controller="Product" asp-action="Basket">
+                                <a class="btn">
                                     <i class="fas fa-shopping-bag"></i>
-                                    <sup class="rounded-circle">0</sup>
-                                    <span>CART ($0)</span>
-                                    @*<ul class="list-unstyled py-3">
-            <li class="">No products in the cart.</li>
-        </ul>*@
+                                    <sup class="rounded-circle">@Model.TotalCount</sup>
+                                    <span>CART ($@Model.TotalPrice)</span>
+                                    <ul class="list-unstyled py-3">
+                                        @if (Model.TotalCount == 0)
+                                        {
+                                            <li>No products in the cart.</li>
+                                        }
+                                        else
+                                        {
+                                        @foreach (var product in Model.ProductDetails)
+                                        {
+                                            <li>
+                                                <a class="card mb-3 border-0" asp-controller="Product" asp-action="DeleteBasket" asp-route-id="@product.Product.ProductId">
+                                                    <div class="row g-0">
+                                                        <div class="col-md-4 px-0">
+                                                            <img src="~/img/@product.Product.Image" class="img-fluid rounded-start h-100" />
+                                                        </div>
+                                                        <div class="col-md-8">                                                            
+                                                                <h5 class="card-title">@product.Product.Title</h5>
+                                                                <p class="card-text">$@product.Product.Price</p>
+                                                                <p class="card-text">@product.Count</p>                                                            
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        }
+                                        }
+                                    </ul>
                                 </a>
                             </li>
                         </ul>

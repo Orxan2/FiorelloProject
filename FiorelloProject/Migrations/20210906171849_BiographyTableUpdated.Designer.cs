@@ -4,14 +4,16 @@ using FiorelloProject.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FiorelloProject.Migrations
 {
     [DbContext(typeof(FiorelloContext))]
-    partial class FiorelloContextModelSnapshot : ModelSnapshot
+    [Migration("20210906171849_BiographyTableUpdated")]
+    partial class BiographyTableUpdated
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

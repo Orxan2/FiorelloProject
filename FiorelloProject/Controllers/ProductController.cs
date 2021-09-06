@@ -1,5 +1,6 @@
 ﻿using FiorelloProject.DAL;
 using FiorelloProject.Models;
+using FiorelloProject.ViewModels.Basket;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -17,6 +18,7 @@ namespace FiorelloProject.Controllers
         {
             _context = context;
         }
+       
         public IActionResult Index()
         {
             ViewBag.ProductCount = _context.ProductCategories.Count();
@@ -32,89 +34,74 @@ namespace FiorelloProject.Controllers
         }
         public IActionResult AddBasket(int id)
         {
-            var product = _context.Products.ToList().FirstOrDefault(b => b.ProductId == id);
-            List<AddedProduct> basket = new List<AddedProduct>();
-            var orxan = Request.Cookies["baskets"];
-            if (orxan != null)
+            var dbProduct = _context.Products.ToList().FirstOrDefault(b => b.ProductId == id);
+            if (dbProduct == null)
             {
-                basket = JsonSerializer.Deserialize<List<AddedProduct>>(Request.Cookies["baskets"]);
+                return NotFound();
             }
-
-
-            if (basket.Exists(b => b.Id == id))
-            {
-                basket.FirstOrDefault(b => b.Id == id).Count++;
-                basket.FirstOrDefault(b => b.Id == id).TotalPrice *= basket.FirstOrDefault(b => b.Id == id).Count;
+            
+            List<AddedProduct> temporaryList = new List<AddedProduct>();
+            var myCookie = Request.Cookies["basket"];
+            if (string.IsNullOrEmpty(myCookie))
+            {               
+                AddedProduct temporaryProduct = new AddedProduct
+                {
+                    Id = id,
+                    Count = 1
+                };
+                temporaryList.Add(temporaryProduct);
 
             }
             else
             {
-                AddedProduct pro = new AddedProduct
+               temporaryList = JsonSerializer.Deserialize<List<AddedProduct>>(myCookie);              
+               var temporaryProduct = temporaryList.FirstOrDefault(tp=>tp.Id == id);
+
+                if (temporaryProduct == null)
                 {
-                    Id = id,
-                    Count = 1,
-                    Title = product.Title,
-                    Image = product.Image,
-                    Price = product.Price,
-                    TotalPrice = product.Price
+                    temporaryProduct = new AddedProduct
+                    {
+                        Id = id,
+                        Count = 1                       
                 };
-                basket.Add(pro);
+                    temporaryList.Add(temporaryProduct);
+                }
+                else
+                {
+                    temporaryProduct.Count++;
+                }
+
+                
+
             }
-
-
-            Response.Cookies.Append("baskets", JsonSerializer.Serialize<List<AddedProduct>>(basket));
+                        
+            Response.Cookies.Append("basket", JsonSerializer.Serialize<List<AddedProduct>>(temporaryList));
 
             return RedirectToAction(nameof(Index));
 
         }
-
-        public IActionResult Basket()
+        public IActionResult DeleteBasket(int id)
         {
-            var basket = JsonSerializer.Deserialize<List<AddedProduct>>(Request.Cookies["baskets"]);
-
-            return View(basket);
-        }
-        public IActionResult Minus(int id)
-        {
-            //var basket = JsonSerializer.Deserialize<List<AddedProduct>>(Request.Cookies["baskets"]);
-            //var product = basket.FirstOrDefault(b => b.Id == id);
-            //basket.FirstOrDefault(b => b.Id == id).Count--;
-            //basket.FirstOrDefault(b => b.Id == id).TotalPrice = product.Price * product.Count;
-            var basket = JsonSerializer.Deserialize<List<AddedProduct>>(Request.Cookies["baskets"]);
-            var product = basket.FirstOrDefault(b => b.Id == id);
-            product.Count--;
-            product.TotalPrice = product.Price * product.Count;
-            if (product.Count == 0)
+            var dbProduct = _context.Products.ToList().FirstOrDefault(b => b.ProductId == id);
+            if (dbProduct == null)
             {
-                basket.Remove(product);
+                return NotFound();
+            }
+
+           var temporaryList = JsonSerializer.Deserialize<List<AddedProduct>>(Request.Cookies["basket"]);
+            var product = temporaryList.FirstOrDefault(p=>p.Id == id);
+            if (product.Count == 1)
+            {
+                temporaryList.Remove(product);
             }
             else
             {
-                basket.FirstOrDefault(p => p.Id == product.Id).Count = product.Count;
-                basket.FirstOrDefault(p => p.Id == product.Id).TotalPrice = product.TotalPrice;
+                product.Count--;
             }
-            Response.Cookies.Append("baskets", JsonSerializer.Serialize<List<AddedProduct>>(basket));
-            return RedirectToAction("Basket", basket);
+            Response.Cookies.Append("basket", JsonSerializer.Serialize<List<AddedProduct>>(temporaryList));
 
-        }
-        
-        public IActionResult Plus(int id)
-        {
-            var basket = JsonSerializer.Deserialize<List<AddedProduct>>(Request.Cookies["baskets"]);
-            var product = basket.FirstOrDefault(b => b.Id == id);
-            basket.FirstOrDefault(p => p.Id == product.Id).Count++;
-            basket.FirstOrDefault(b => b.Id == id).TotalPrice = product.Price * product.Count;
+            return RedirectToAction(nameof(Index));
 
-            Response.Cookies.Append("baskets", JsonSerializer.Serialize<List<AddedProduct>>(basket));
-            return RedirectToAction("Basket", basket);
-        }
-        public IActionResult Close(int id)
-        {
-            var basket = JsonSerializer.Deserialize<List<AddedProduct>>(Request.Cookies["baskets"]);
-            var product = basket.FirstOrDefault(b => b.Id == id);
-            basket.Remove(product);
-            Response.Cookies.Append("baskets", JsonSerializer.Serialize<List<AddedProduct>>(basket));
-            return RedirectToAction("Basket", basket);
         }
     }
 }

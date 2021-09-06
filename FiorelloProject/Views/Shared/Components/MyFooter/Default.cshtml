@@ -34,7 +34,7 @@
                     <ul class="list-unstyled mt-4">
                         @foreach (var item in Model)
                         {
-                            @if (!string.IsNullOrEmpty(item.Link))
+                            @if (item.Type == Biography.TitleType.SocialMedia)
                             {
                                 <li><a class="text-black-50" href="@item.Link">@item.Title</a></li>
                             }
