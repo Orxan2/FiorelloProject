@@ -18,7 +18,7 @@ namespace FiorelloProject.ViewComponents
         public async Task<IViewComponentResult> InvokeAsync(int product)
         {
             var productCategories = _context.ProductCategories.Include(pc => pc.Category).Include(pc => pc.Product)
-               .Where(pc => pc.Product.IsDeleted == false).OrderByDescending(pc => pc.ProductCategoryId).Take(product);
+               .Where(pc => pc.Product.IsDeleted == false && pc.Category.IsDeleted==false).OrderByDescending(pc => pc.ProductCategoryId).Take(product);
             return View(await Task.FromResult(productCategories));
         }
     }

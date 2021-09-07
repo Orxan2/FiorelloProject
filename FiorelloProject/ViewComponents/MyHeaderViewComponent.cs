@@ -40,7 +40,7 @@ namespace FiorelloProject.ViewComponents
                     {
                         if (temporaryProduct != null)
                         {
-                            var dbProduct = _context.Products.ToList().FirstOrDefault(p => p.ProductId == temporaryProduct.Id);
+                            var dbProduct = _context.Products.ToList().FirstOrDefault(p => p.ProductId == temporaryProduct.Id && p.IsDeleted == false);
 
                             BasketItemViewModel basketItem = new BasketItemViewModel
                             {

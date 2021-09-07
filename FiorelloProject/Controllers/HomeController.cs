@@ -22,9 +22,9 @@ namespace FiorelloProject.Controllers
             {
                 Sliders = await _context.Sliders.ToListAsync(),
                 Slogan = await _context.Slogan.ToListAsync(),
-                Categories = await _context.Categories.ToListAsync(),
+                Categories = await _context.Categories.Where(c=>c.IsDeleted == false).ToListAsync(),
                 ProductCategories = await _context.ProductCategories.Include(pc=>pc.Category).
-                Include(pc=>pc.Product).Where(pc=>pc.Product.IsDeleted==false).OrderByDescending(pc=>pc.ProductCategoryId).Take(8).ToListAsync(),
+                Include(pc=>pc.Product).Where(pc=>pc.Product.IsDeleted==false  && pc.Category.IsDeleted == false).OrderByDescending(pc=>pc.ProductCategoryId).Take(8).ToListAsync(),
                 Experts = await _context.Experts.Include(e => e.Profession).ToListAsync(),
                 InstagramPhotos = await _context.InstagramPhotos.ToListAsync(),
                 ExpertSliders = await _context.ExpertSliders.Include(e => e.Profession).ToListAsync(),

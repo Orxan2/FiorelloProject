@@ -21,7 +21,8 @@ namespace FiorelloProject.Controllers
        
         public IActionResult Index()
         {
-            ViewBag.ProductCount = _context.ProductCategories.Count();
+            ViewBag.ProductCount = _context.ProductCategories.Include(pc => pc.Category).Include(pc => pc.Product)
+                .Where(pc => pc.Product.IsDeleted == false && pc.Category.IsDeleted == false).OrderByDescending(pc => pc.ProductCategoryId).Count();
            
             return View();
             
@@ -29,12 +30,12 @@ namespace FiorelloProject.Controllers
         public async Task<IActionResult> LoadMore(int skip=8,int take=4)
         {           
             var productCategories = await _context.ProductCategories.Include(pc => pc.Category).Include(pc => pc.Product)
-                .Where(pc => pc.Product.IsDeleted == false).OrderByDescending(pc => pc.ProductCategoryId).Skip(skip).Take(take).ToListAsync();
+                .Where(pc => pc.Product.IsDeleted == false && pc.Category.IsDeleted == false).OrderByDescending(pc => pc.ProductCategoryId).Skip(skip).Take(take).ToListAsync();
             return PartialView("_LoadMore",productCategories);
         }
         public IActionResult AddBasket(int id)
         {
-            var dbProduct = _context.Products.ToList().FirstOrDefault(b => b.ProductId == id);
+            var dbProduct = _context.Products.ToList().FirstOrDefault(b => b.ProductId == id && b.IsDeleted == false);
             if (dbProduct == null)
             {
                 return NotFound();
@@ -82,7 +83,7 @@ namespace FiorelloProject.Controllers
         }
         public IActionResult DeleteBasket(int id)
         {
-            var dbProduct = _context.Products.ToList().FirstOrDefault(b => b.ProductId == id);
+            var dbProduct = _context.Products.ToList().FirstOrDefault(b => b.ProductId == id && b.IsDeleted == false);
             if (dbProduct == null)
             {
                 return NotFound();
