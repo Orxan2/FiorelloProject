@@ -55,7 +55,7 @@ namespace FiorelloProject.Areas.AdminPanel.Controllers
                return NotFound();
             }
 
-            var category = _context.Categories.FirstOrDefault(c=>c.CategoryId == id);
+            var category = _context.Categories.FirstOrDefault(c=>c.CategoryId == id && c.IsDeleted==false);
 
             if (category == null)
             {
@@ -89,29 +89,45 @@ namespace FiorelloProject.Areas.AdminPanel.Controllers
         }
         public IActionResult DeleteOrActive(int id)
         {
-            var updatedProduct = _context.Categories.FirstOrDefault(p=>p.CategoryId == id);
+            var updatedCategory = _context.Categories.FirstOrDefault(p=>p.CategoryId == id);
 
-            if (updatedProduct == null)
+            if (updatedCategory == null)
             {
                return NotFound();
             }
 
-            if (updatedProduct.IsDeleted == false)
+            if (updatedCategory.IsDeleted == false)
             {
-                updatedProduct.IsDeleted = true;
-                updatedProduct.DeletedDate = DateTime.UtcNow.AddHours(4);
+                updatedCategory.IsDeleted = true;
+                updatedCategory.DeletedDate = DateTime.UtcNow.AddHours(4);
             }
             else
             {
-                updatedProduct.IsDeleted = false;
-                updatedProduct.DeletedDate = null;
+                updatedCategory.IsDeleted = false;
+                updatedCategory.DeletedDate = null;
             }
             
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
 
-        
+        public IActionResult Details(int id)
+        {
+            if (id == 0)
+            {
+                return NotFound();
+            }
+
+            var category = _context.Categories.FirstOrDefault(c => c.CategoryId == id);
+
+            if (category == null)
+            {
+                return NotFound();
+            }
+
+            return View(category);            
+        }
+
 
     }
 }

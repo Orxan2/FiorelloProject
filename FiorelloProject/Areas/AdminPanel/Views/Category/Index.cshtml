@@ -32,7 +32,7 @@
                                             <td>
                                                 <ul class="list-unstyled d-flex justify-content-center align-items-center mb-0" >
                                                     <li class="mx-2"><a asp-action="Update" asp-route-id="@category.CategoryId" class="btn btn-outline-warning @(category.IsDeleted?"disabled":null)" title="Update category"><i class="fa fa-refresh"></i></a></li>
-                                                    <li class="mx-2"><a class="btn btn-outline-info @(category.IsDeleted?"disabled":null)" title="Review detail"><i class="fa fa-address-card"></i></a></li>
+                                                    <li class="mx-2"><a asp-action="Details" asp-route-id="@category.CategoryId" class="btn btn-outline-info" title="Review detail"><i class="fa fa-address-card"></i></a></li>
                                                     <li class="mx-2"><a asp-action="DeleteOrActive" asp-route-id="@category.CategoryId" class="btn @(category.IsDeleted?"btn-outline-success":"btn-outline-danger")" title="@(category.IsDeleted?"Make unlock":"Make lock")"><i class="@(category.IsDeleted? "fas fa-lock-open" : "fas fa-lock")"></i></a></li>
                                                 </ul>
                                             </td>

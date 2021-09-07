@@ -1,0 +1,24 @@
+﻿@model Category
+@{
+    ViewData["Title"] = "Details";
+}
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="display-1">Category Detail</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 grid-margin">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="display-4"><span class="font-weight-bold">Category : </span><span class="text-muted">@Model.Title</span></h2>
+                        <h2 class="display-4"><span class="font-weight-bold">IsDeleted : </span><span class="text-muted">@Model.IsDeleted</span> </h2>
+                    </div>                   
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
