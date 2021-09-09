@@ -37,7 +37,7 @@ namespace FiorelloProject.Areas.AdminPanel.Controllers
                 return View();
             }
 
-            bool dublicateControl = _context.Categories.Any(c=>c.Title == category.Title);
+            bool dublicateControl = _context.Categories.Any(c=>c.Title.ToLower() == category.Title.ToLower());
             if (dublicateControl)
             {
                 ModelState.AddModelError("Title","Has Already this Category at Database");
@@ -48,9 +48,9 @@ namespace FiorelloProject.Areas.AdminPanel.Controllers
             return RedirectToAction(nameof(Index)); ;
         }
 
-        public IActionResult Update(int id)
+        public IActionResult Update(int? id)
         {
-            if (id == 0)
+            if (id == null)
             {
                return NotFound();
             }
@@ -66,27 +66,33 @@ namespace FiorelloProject.Areas.AdminPanel.Controllers
         }
 
         [HttpPost]
-        public IActionResult Update(Category category)
+        public IActionResult Update(int? id,Category category)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
             if (!ModelState.IsValid)
             {
                 return View();
             }
-            bool dublicateControl = _context.Categories.Any(c => c.Title == category.Title);
+            bool dublicateControl = _context.Categories.Any(c => c.Title.ToLower() == category.Title.ToLower());
             if (dublicateControl)
             {
                 ModelState.AddModelError("Title", "Has Already this Category at Database");
                 return View();
             }
-            if (!_context.Categories.Any(c=>c.CategoryId == category.CategoryId))
+            if (id != category.CategoryId)
             {
-                return NotFound();
+                return BadRequest();
             }           
 
             _context.Categories.Update(category);
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
+       
+      
         public IActionResult DeleteOrActive(int id)
         {
             var updatedCategory = _context.Categories.FirstOrDefault(p=>p.CategoryId == id);
@@ -111,9 +117,9 @@ namespace FiorelloProject.Areas.AdminPanel.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult Details(int id)
+        public IActionResult Details(int? id)
         {
-            if (id == 0)
+            if (id == null)
             {
                 return NotFound();
             }
