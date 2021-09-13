@@ -1,4 +1,5 @@
 ﻿using FiorelloProject.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FiorelloProject.DAL
 {
-    public class FiorelloContext:DbContext
+    public class FiorelloContext:IdentityDbContext<AppUser>
     {
         public FiorelloContext(DbContextOptions<FiorelloContext> options):base(options)
         {
